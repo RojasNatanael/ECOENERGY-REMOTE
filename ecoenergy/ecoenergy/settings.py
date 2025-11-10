@@ -1,5 +1,5 @@
-
-
+import os
+from dotenv import load_dotenv
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,6 +37,9 @@ handler404 = 'organizations.views.errors'
 handler500 = 'organizations.views.errors' 
 handler403 = 'organizations.views.errors'
 handler400 = 'organizations.views.errors'
+
+
+
 
 
 
