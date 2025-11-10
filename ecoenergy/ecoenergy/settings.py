@@ -26,18 +26,24 @@ SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_SAMESITE = 'Lax'
 
 
-#======
+#======MEDIA======#
+MEDIA_ROOT = 'media/'
 
+#======LOGIN======#
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
-
-
+handler404 = 'organizations.views.errors'
+handler500 = 'organizations.views.errors' 
+handler403 = 'organizations.views.errors'
+handler400 = 'organizations.views.errors'
 
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -123,6 +129,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
 
 
 # Static files (CSS, JavaScript, Images)

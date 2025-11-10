@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2><i class="fas fa-edit me-2"></i>{{ title }}</h2>
+                    <small class="text-muted">
+                        {% if organization %}
+                            {{ organization.name }}
+                        {% else %}
+                            Sin organización asignada
+                        {% endif %}
+                    </small>
+                </div>
+                <a href="{% url 'lista_dispositivos' %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Volver
+                </a>
+            </div>
+
+            <!-- Edit Form -->
+            <div class="card">
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <!-- Organization Field -->
+                            <div class="col-12 mb-4">
+                                <h5 class="mb-3 text-primary"><i class="fas fa-building me-2"></i>Organización</h5>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Organización</label>
+                                    <input type="text" 
+                                           class="form-control bg-light" 
+                                           value="{% if organization %}{{ organization.name }}{% else %}Sin organización asignada{% endif %}" 
+                                           readonly
+                                           style="cursor: not-allowed; background-color: #e9ecef !important;">
+                                    <div class="form-text">
+                                        Este dispositivo será asignado a tu organización actual.
+                                    </div>
+                                    <!-- Hidden field to ensure organization is set -->
+                                    {% if organization %}
+                                        <input type="hidden" name="organization_id" value="{{ organization.id }}">
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Rest of your form fields -->
+                            <div class="col-md-6">
+                                <h5 class="mb-3 text-primary"><i class="fas fa-info-circle me-2"></i>Información Básica</h5>
+                                
+                                <div class="mb-3">
+                                    <label for="{{ form.name.id_for_label }}" class="form-label">
+                                        Nombre del Dispositivo <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.name }}
+                                    <div class="form-text">Nombre único dentro de tu organización.</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="{{ form.zone.id_for_label }}" class="form-label">
+                                        Zona <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.zone }}
+                                    <div class="form-text">Zona donde está instalado el dispositivo.</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="{{ form.product.id_for_label }}" class="form-label">
+                                        Producto/Modelo <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.product }}
+                                    <div class="form-text">Selecciona el modelo del catálogo.</div>
+                                </div>
+                            </div>
+
+                            <!-- Specifications -->
+                            <div class="col-md-6">
+                                <h5 class="mb-3 text-primary"><i class="fas fa-cogs me-2"></i>Especificaciones</h5>
+                                
+                                <div class="mb-3">
+                                    <label for="{{ form.max_power_w.id_for_label }}" class="form-label">
+                                        Potencia Máxima (W) <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.max_power_w }}
+                                    <div class="form-text">Potencia máxima en vatios.</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="{{ form.serial_number.id_for_label }}" class="form-label">
+                                        Número de Serie
+                                    </label>
+                                    {{ form.serial_number }}
+                                    <div class="form-text">Opcional - número de serie del dispositivo.</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="{{ form.image.id_for_label }}" class="form-label">
+                                        Imagen del Dispositivo
+                                    </label>
+                                    {{ form.image }}
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="{{ form.status.id_for_label }}" class="form-label">
+                                        Estado
+                                    </label>
+                                    {{ form.status }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Actions -->
+                        <div class="d-flex justify-content-between mt-4 pt-3 border-top">
+                            <a href="{% url 'lista_dispositivos' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-times me-2"></i>Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Guardar Dispositivo
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

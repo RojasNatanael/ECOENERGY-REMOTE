@@ -1,10 +1,123 @@
 {% extends "base.html" %}
 
-{% block title %}Home - My Site{% endblock %}
+{% block title %}Dashboard - EcoEnergy{% endblock %}
 
 {% block content %}
-    <div class="text-center">
-        <h1>Welcome, {{ user.username|default:"Guest" }}!</h1>
-        <p>This is a simple home page with a Bootstrap navbar.{{visitas}} </p>
+<div class="container">
+    <!-- Quick Stats -->
+    <div class="row mb-4">
+        <!-- Encargado EcoEnergy Dashboard -->
+        {% if user_role == "Encargado EcoEnergy" %}
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h4 class="card-title">{{ total_organizations }}</h4>
+                    <p class="card-text">Organizaciones</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h4 class="card-title">{{ total_users }}</h4>
+                    <p class="card-text">Usuarios</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-info">
+                <div class="card-body">
+                    <h4 class="card-title">{{ total_zones }}</h4>
+                    <p class="card-text">Zonas</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-warning">
+                <div class="card-body">
+                    <h4 class="card-title">{{ total_devices }}</h4>
+                    <p class="card-text">Dispositivos</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cliente Admin Dashboard -->
+        {% elif user_role == "Cliente Admin" %}
+        <div class="col-md-4 mb-4">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h4 class="card-title">{{ organization_zones }}</h4>
+                    <p class="card-text">Zonas</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h4 class="card-title">{{ organization_devices }}</h4>
+                    <p class="card-text">Dispositivos</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-white bg-info">
+                <div class="card-body">
+                    <h4 class="card-title">{{ active_devices }}</h4>
+                    <p class="card-text">Activos</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cliente Electrónico Dashboard -->
+        {% elif user_role == "Cliente Electrónico" %}
+        <div class="col-md-6 mb-4">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h4 class="card-title">{{ total_devices }}</h4>
+                    <p class="card-text">Dispositivos Activos</p>
+                </div>
+            </div>
+        </div>
+    
+
+        <!-- Default User -->
+        {% else %}
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <h3 class="text-primary">Bienvenido al sistema EcoEnergy</h3>
+                    <p class="text-muted">Contacte al administrador para asignarle un rol en el sistema.</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
+
+    <!-- Quick Actions -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="card-title mb-0"><i class="fas fa-bolt me-2"></i>Acciones Rápidas</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-2">
+                            <a href="{% url 'lista_usuarios' %}" class="btn btn-warning w-100">
+                                <i class="fas fa-user-plus me-2"></i>Listar Usuarios
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <a href="{% url 'lista_productos' %}" class="btn btn-warning w-100">
+                                <i class="fas fa-user-plus me-2"></i>Listar productos
+                            </a>
+                        </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

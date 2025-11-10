@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Usuario - EcoEnergy{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-user-edit me-2"></i>Editar Usuario - {{ target_user.usuario.name }}
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <!-- Admin Info -->
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Está editando el perfil de <strong>{{ target_user.usuario.name }}</strong>
+                    </div>
+                    
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <!-- Personal Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-3">
+                                    <i class="fas fa-id-card me-2"></i>Información Personal
+                                </h5>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label"><strong>Nombre completo *</strong></label>
+                                {{ form.name }}
+                                {% if form.name.errors %}
+                                <div class="text-danger small">
+                                    {% for error in form.name.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label"><strong>Teléfono *</strong></label>
+                                {{ form.phone }}
+                                {% if form.phone.errors %}
+                                <div class="text-danger small">
+                                    {% for error in form.phone.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Account Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-3">
+                                    <i class="fas fa-envelope me-2"></i>Información de Cuenta
+                                </h5>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label"><strong>Email *</strong></label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                <div class="text-danger small">
+                                    {% for error in form.email.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nombre de usuario</label>
+                                <input type="text" class="form-control" value="{{ target_user.username }}" disabled>
+                                <small class="form-text text-muted">El nombre de usuario no se puede cambiar.</small>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nombre</label>
+                                {{ form.first_name }}
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Apellido</label>
+                                {{ form.last_name }}
+                            </div>
+                        </div>
+
+                        <!-- Admin Settings -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary mb-3">
+                                    <i class="fas fa-cog me-2"></i>Configuración Administrativa
+                                </h5>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label"><strong>Organización *</strong></label>
+                                {{ form.organization }}
+                                {% if form.organization.errors %}
+                                <div class="text-danger small">
+                                    {% for error in form.organization.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label"><strong>Rol *</strong></label>
+                                {{ form.group }}
+                                {% if form.group.errors %}
+                                <div class="text-danger small">
+                                    {% for error in form.group.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="col-12 mb-3">
+                                <div class="form-check">
+                                    {{ form.is_active }}
+                                    <label class="form-check-label" for="{{ form.is_active.id_for_label }}">
+                                        <strong>{{ form.is_active.label }}</strong>
+                                    </label>
+                                    <small class="form-text text-muted d-block">{{ form.is_active.help_text }}</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between">
+                                    <a href="{% url 'lista_usuarios' %}" class="btn btn-secondary">
+                                        <i class="fas fa-arrow-left me-2"></i>Volver a Lista
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save me-2"></i>Guardar Cambios
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Add Bootstrap styling to form fields
+document.addEventListener('DOMContentLoaded', function() {
+    const inputs = document.querySelectorAll('input, select, textarea');
+    inputs.forEach(input => {
+        if (input.type !== 'checkbox' && input.type !== 'radio') {
+            input.classList.add('form-control');
+        }
+        if (input.tagName === 'SELECT') {
+            input.classList.add('form-select');
+        }
+        if (input.type === 'checkbox') {
+            input.classList.add('form-check-input');
+        }
+    });
+});
+</script>
+{% endblock %}
